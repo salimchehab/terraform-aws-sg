@@ -1,8 +1,9 @@
 resource "aws_security_group" "this" {
   count = var.create_sg ? 1 : 0
 
-  vpc_id = var.vpc_id
-  name   = var.sg_name
+  vpc_id      = var.vpc_id
+  name        = var.sg_name
+  description = var.sg_description
 
   tags = merge(
     {
@@ -15,13 +16,15 @@ resource "aws_security_group" "this" {
 resource "aws_security_group_rule" "ingress_rules_cidr_blocks" {
   count = var.create_sg && length(var.ingress_rules_cidr_blocks) > 0 ? length(var.ingress_rules_cidr_blocks) : 0
 
-  type              = "ingress"
-  from_port         = var.ingress_rules_cidr_blocks[count.index]["from_port"]
-  to_port           = var.ingress_rules_cidr_blocks[count.index]["to_port"]
-  protocol          = lookup(element(var.ingress_rules_cidr_blocks, count.index), "protocol", "tcp")
-  cidr_blocks       = [var.ingress_rules_cidr_blocks[count.index]["cidr_block"]]
-  description       = lookup(var.ingress_rules_cidr_blocks[count.index], "description", null)
-  security_group_id = concat(aws_security_group.this.*.id, [""])[0]
+  type      = "ingress"
+  from_port = var.ingress_rules_cidr_blocks[count.index]["from_port"]
+  to_port   = var.ingress_rules_cidr_blocks[count.index]["to_port"]
+  protocol  = lookup(element(var.ingress_rules_cidr_blocks, count.index), "protocol", "tcp")
+  cidr_blocks = [
+  var.ingress_rules_cidr_blocks[count.index]["cidr_block"]]
+  description = lookup(var.ingress_rules_cidr_blocks[count.index], "description", null)
+  security_group_id = concat(aws_security_group.this.*.id, [
+  ""])[0]
 }
 
 resource "aws_security_group_rule" "egress_rules_cidr_blocks" {

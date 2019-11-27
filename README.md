@@ -21,6 +21,7 @@ Supported rules for ingress and egress:
 | egress\_rules\_source\_sg\_id | A list of maps containing the egress rules: from_port, to_port, and a source_security_group_id. | list(map(string)) | `[]` | no |
 | ingress\_rules\_cidr\_blocks | A list of maps containing the ingress rules: from_port, to_port, and a cidr_block. | list(map(string)) | `[]` | no |
 | ingress\_rules\_source\_sg\_id | A list of maps containing the ingress rules: from_port, to_port, and a source_security_group_id. | list(map(string)) | `[]` | no |
+| sg\_description | The security group description. | string | `"Created using Terraform module terraform-aws-sg. Managed by Terraform."` | no |
 | sg\_name | The name of the security group. | string | n/a | yes |
 | sg\_tags | A map of tags for the security group. | map(string) | `{}` | no |
 | vpc\_id | The VPC ID for the security group. | string | n/a | yes |

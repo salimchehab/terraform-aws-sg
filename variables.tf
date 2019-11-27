@@ -4,6 +4,12 @@ variable "create_sg" {
   default     = false
 }
 
+variable "sg_description" {
+  description = "The security group description."
+  type        = string
+  default     = "Created using Terraform module terraform-aws-sg. Managed by Terraform."
+}
+
 variable "vpc_id" {
   description = "The VPC ID for the security group."
   type        = string
