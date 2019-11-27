@@ -31,11 +31,11 @@ resource "aws_security_group_rule" "egress_rules_cidr_blocks" {
   count = var.create_sg && length(var.egress_rules_cidr_blocks) > 0 ? length(var.egress_rules_cidr_blocks) : 0
 
   type              = "egress"
-  from_port         = var.ingress_rules_cidr_blocks[count.index]["from_port"]
-  to_port           = var.ingress_rules_cidr_blocks[count.index]["to_port"]
-  protocol          = lookup(element(var.ingress_rules_cidr_blocks, count.index), "protocol", "tcp")
-  cidr_blocks       = [var.ingress_rules_cidr_blocks[count.index]["cidr_block"]]
-  description       = lookup(var.ingress_rules_cidr_blocks[count.index], "description", null)
+  from_port         = var.egress_rules_cidr_blocks[count.index]["from_port"]
+  to_port           = var.egress_rules_cidr_blocks[count.index]["to_port"]
+  protocol          = lookup(element(var.egress_rules_cidr_blocks, count.index), "protocol", "tcp")
+  cidr_blocks       = [var.egress_rules_cidr_blocks[count.index]["cidr_block"]]
+  description       = lookup(var.egress_rules_cidr_blocks[count.index], "description", null)
   security_group_id = concat(aws_security_group.this.*.id, [""])[0]
 }
 
